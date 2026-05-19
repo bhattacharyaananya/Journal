@@ -3,7 +3,6 @@
 Welcome to my technical journal and research blog, hosted live at **[bhattacharyaananya].github.io**. 
 
 This repository serves as both the backend source code for my static site and an open-source archive of my deep dives, lab notes, tool walk-throughs, and security research. My goal is to break down complex security concepts into highly technical, reproducible, and actionable write-ups.
-
 ---
 
 ## 🧭 Journal Index & Categories
@@ -37,3 +36,27 @@ git clone [https://github.com/](https://github.com/)[bhattacharyaananya]/[Journa
 
 # Navigate into the project directory
 cd [Journal]
+
+
+## Running the blog locally (Jekyll Example)
+
+If you want to preview the site locally exactly how it looks on github.io:
+Bash
+
+'''bash
+bundle install
+bundle exec jekyll serve
+
+Open your browser and navigate to http://localhost:4000.
+
+## 🤝 Contribution & Feedback
+
+While this is primarily a personal journal, security thrives on peer review. If you spot a technical inaccuracy, a broken link, or an outdated command in one of my write-ups:
+
+    Open an Issue describing the error.
+
+    Submit a Pull Request fixing the markdown file in the _posts directory.
+
+## ⚠️ Responsible Disclosure & Disclaimer
+
+    Legal & Ethical Notice: All content, scripts, and lab walk-throughs published in this journal are strictly for educational purposes, defensive security research, and authorized penetration testing. I do not condone or support malicious activities. Any actions taken using the information found here are entirely at your own risk.
