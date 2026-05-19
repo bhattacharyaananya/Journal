@@ -13,13 +13,12 @@
       --accent: #38bdf8;
       --accent2: #22c55e;
       --border: #1e293b;
+      --line: #0f172a;
       --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-mono: "Fira Code", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -34,9 +33,7 @@
       text-decoration: none;
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
+    a:hover { text-decoration: underline; }
 
     header {
       border-bottom: 1px solid var(--border);
@@ -44,54 +41,61 @@
     }
 
     .container {
-      max-width: 960px;
+      max-width: 980px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
+    /* Hero */
+
     .hero {
-      padding: 2.25rem 0 2rem;
-      text-align: left;
+      padding: 2.4rem 0 2.1rem;
     }
 
     .hero-title {
       font-size: 2.3rem;
       margin: 0 0 0.4rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-mono);
+    }
+
+    .hero-title span {
+      color: var(--accent2);
+      margin-right: 0.35rem;
     }
 
     .hero-subtitle {
-      font-size: 1rem;
       margin: 0.25rem 0 0.6rem;
+      max-width: 650px;
       color: var(--muted);
-      max-width: 640px;
+      font-size: 1rem;
     }
 
     .hero-meta {
       display: flex;
       flex-wrap: wrap;
       gap: 0.75rem;
-      margin-top: 0.5rem;
-      font-size: 0.85rem;
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
       color: var(--muted);
     }
 
-    .hero-pill {
+    .pill {
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
       padding: 0.15rem 0.6rem;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background-color: rgba(15, 23, 42, 0.7);
+      background-color: rgba(15, 23, 42, 0.85);
       font-family: var(--font-mono);
       font-size: 0.8rem;
     }
 
-    .hero-pill span {
+    .pill span {
+      color: var(--accent);
       font-size: 0.7rem;
-      color: var(--accent2);
     }
 
     .hero-url code {
@@ -102,35 +106,57 @@
     }
 
     main {
-      padding: 0 0 3rem;
+      padding: 1.5rem 0 3rem;
     }
 
-    .band {
-      padding: 1.6rem 0;
-      border-top: 1px solid var(--border);
+    /* Timeline layout */
+
+    .timeline-wrapper {
+      position: relative;
+      padding-left: 2.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .timeline-line {
+      position: absolute;
+      left: 0.9rem;
+      top: 0.1rem;
+      bottom: 0.1rem;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--line), #020617);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 1.4rem 0 1.4rem;
       border-bottom: 1px solid #020617;
     }
 
-    .band:nth-of-type(odd) {
-      background: linear-gradient(90deg, rgba(15,23,42,0.9), #020617);
+    .timeline-item:last-of-type {
+      border-bottom: none;
     }
 
-    .band:nth-of-type(even) {
-      background: linear-gradient(90deg, #020617, rgba(15,23,42,0.85));
-    }
-
-    .band-inner {
+    .timeline-marker {
+      position: absolute;
+      left: -2.5rem;
+      top: 1.4rem;
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background-color: var(--bg-alt);
       display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent2);
     }
 
-    .band-label {
-      font-size: 0.8rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+    .timeline-marker span {
+      font-size: 0.7rem;
       color: var(--muted);
-      font-family: var(--font-mono);
+      margin-right: 0.1rem;
     }
 
     .band-header {
@@ -142,8 +168,8 @@
     }
 
     .band-title {
-      font-size: 1.3rem;
-      margin: 0;
+      font-size: 1.25rem;
+      margin: 0 0 0.2rem;
     }
 
     .band-subtitle {
@@ -151,18 +177,22 @@
       color: var(--muted);
     }
 
-    .band-content {
+    .band-body {
       margin-top: 0.4rem;
       font-size: 0.95rem;
       color: var(--fg);
     }
 
-    .band-content ul {
-      margin: 0.45rem 0;
-      padding-left: 1.1rem;
+    .band-body p {
+      margin: 0.3rem 0;
     }
 
-    .band-content li {
+    .band-body ul {
+      margin: 0.4rem 0;
+      padding-left: 1.2rem;
+    }
+
+    .band-body li {
       margin: 0.15rem 0;
     }
 
@@ -176,7 +206,7 @@
     }
 
     .meta-section {
-      padding: 2rem 0 0;
+      margin-top: 2.1rem;
       font-size: 0.9rem;
       color: var(--muted);
     }
@@ -192,6 +222,14 @@
       max-width: 720px;
     }
 
+    code {
+      font-family: var(--font-mono);
+      background-color: #020617;
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.2rem;
+      font-size: 0.9em;
+    }
+
     footer {
       border-top: 1px solid var(--border);
       padding: 1rem 0 1.5rem;
@@ -202,10 +240,16 @@
 
     @media (max-width: 640px) {
       .hero {
-        padding: 1.8rem 0 1.6rem;
+        padding: 2rem 0 1.8rem;
       }
       .hero-title {
-        font-size: 1.9rem;
+        font-size: 2rem;
+      }
+      .timeline-wrapper {
+        padding-left: 2rem;
+      }
+      .timeline-marker {
+        left: -2.1rem;
       }
     }
   </style>
@@ -213,149 +257,149 @@
 <body>
   <header>
     <div class="container hero">
-      <h1 class="hero-title">ResearchOrbit</h1>
+      <h1 class="hero-title">
+        <span>&gt;_</span>ResearchOrbit
+      </h1>
       <p class="hero-subtitle">
-        A technical cyber security journal documenting blue-team operations, offensive security labs, digital forensics casework, and applied cryptography research.
+        A technical cyber security journal following the orbit of blue-team engineering, offensive security labs, digital forensics investigations, and applied cryptography research.
       </p>
       <div class="hero-meta">
-        <div class="hero-pill">
-          <span>●</span>
-          journal::mode=read
+        <div class="pill">
+          <span>●</span> journal::mode=read
         </div>
         <div class="hero-url">
-          Hosted at de>yourname.github.io/your-repo-name</code>
+          Hosted at <code>yourname.github.io/your-repo-name</code>
         </div>
       </div>
     </div>
   </header>
 
   <main>
-    <!-- Blue-Team / SOC Band -->
-    <section id="blue-team-soc" class="band">
-      <div class="container band-inner">
-        <div class="band-label">Domain 01 · Blue Team</div>
-        <div class="band-header">
-          <h2 class="band-title">Blue-Team &amp; SOC Engineering</h2>
-          <div class="band-subtitle">
-            Detection engineering, incident response, and threat hunting.
-          </div>
-        </div>
-        <div class="band-content">
-          <p>
-            This track focuses on the defensive side of operations: how telemetry is collected, normalized, and turned into actionable detections and playbooks inside a SOC.
-          </p>
-          <u
-          <ul>
-            >Designing and tuning SIEM pipelines (e.g., Wazuh, Splunk) for high-fidelity detections.</l/li>
-            >Building detection content: rules, correlation searches, dashboards, and alerting logic.</l/li>
-            >Threat hunting workflows, from initial hypotheses to validated findings.</l/li>
-            >Incident response case studies built from lab-simulated intrusions.</li>
-          </ul>
-        </div>
-        <div class="band-footer">
-          <a href="/blue-team-soc/">Start with Blue-Team/SOC posts →</a>
-        </div>
-      </div>
-    </section>
+    <div class="container">
+      <div class="timeline-wrapper">
+        <div class="timeline-line"></div>
 
-    <!-- Offensive Security Band -->
-    <section id="offensive-security" class="band">
-      <div class="container band-inner">
-        <div class="band-label">Domain 02 · Offensive</div>
-        <div class="band-header">
-          <h2 class="band-title">Offensive Security &amp; VAPT</h2>
-          <div class="band-subtitle">
-            Red teaming, exploitation, and active defense.
+        <!-- 01: Blue-Team / SOC -->
+        <section id="blue-team-soc" class="timeline-item">
+          <div class="timeline-marker">
+            <span>#</span>01
           </div>
-        </div>
-        <div class="band-content">
-          <p>
-            Here the emphasis is on adversarial techniques: how attackers move, how exploits are built, and how defenders can observe and counter those actions in controlled environments.
-          </p>
-          <u
-          <ul>
-            >End-to-end VAPT write-ups, from reconnaissance to post-exploitation.</l/li>
-            >Custom exploit scripts and proofs-of-concept, shared with responsible safeguards.</l/li>
-            >Honeypots, deception infrastructure, and other active defense experiments.</l/li>
-            >Active Directory attack paths, misconfigurations, and lateral movement scenarios.</li>
-          </ul>
-        </div>
-        <div class="band-footer">
-          <a href="/offensive-security/">Start with Offensive Security posts →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Digital Forensics Band -->
-    <section id="digital-forensics" class="band">
-      <div class="container band-inner">
-        <div class="band-label">Domain 03 · DFIR</div>
-        <div class="band-header">
-          <h2 class="band-title">Digital Forensics &amp; Incident Response</h2>
-          <div class="band-subtitle">
-            Memory, disk, network, and blockchain forensics.
+          <div class="band-header">
+            <h2 class="band-title">Blue-Team &amp; SOC Engineering</h2>
+            <div class="band-subtitle">
+              Detection engineering, incident response, and threat hunting.
+            </div>
           </div>
-        </div>
-        <div class="band-content">
-          <p>
-            This domain is about reconstruction: taking memory dumps, disk images, logs, and packet captures and turning them into a coherent incident story.
-          </p>
-          <u
-          <ul>
-            >Host artifact analysis: registry hives, browser artifacts, event logs, and OS traces.</l/li>
-            >Memory and disk forensics workflows with tools such as Volatility and related suites.</l/li>
-            >Network forensics based on raw de>.pcap</code> files and timeline reconstruction.</l/li>
-            >Blockchain ledger tracking and transaction analysis for fraud and abuse cases.</li>
-          </ul>
-        </div>
-        <div class="band-footer">
-          <a href="/digital-forensics/">Start with Digital Forensics posts →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Research & Crypto Band -->
-    <section id="research-crypto" class="band">
-      <div class="container band-inner">
-        <div class="band-label">Domain 04 · Research</div>
-        <div class="band-header">
-          <h2 class="band-title">Research, Cryptography &amp; Emerging Security</h2>
-          <div class="band-subtitle">
-            Crypto flaws, reverse engineering, and experimental work.
+          <div class="band-body">
+            <p>
+              This domain covers the defensive backbone of modern operations: how telemetry flows into SIEMs, how detections are authored, and how incidents are worked end-to-end inside a SOC.
+            </p>
+            <ul>
+              <li>Designing and tuning SIEM pipelines with Wazuh, Splunk, and related tooling.</li>
+              <li>Authoring detection content: rules, correlation searches, dashboards, and alerts.</li>
+              <li>Threat hunting workflows, from hypothesis creation to investigation closure.</li>
+              <li>Incident response runbooks and case studies based on lab-built intrusions.</li>
+            </ul>
           </div>
-        </div>
-        <div class="band-content">
-          <p>
-            ResearchOrbit also serves as a notebook for lower-level and emerging topics in security, from cryptographic design to hardware and machine learning applications.
-          </p>
-          <u
-          <ul>
-            >Explanations of cryptographic flaws, misuse patterns, and implementation pitfalls.</l/li>
-            >Reverse engineering binaries, protocols, and obfuscated logic.</l/li>
-            >Explorations of post-quantum cryptography and hardware-assisted security.</l/li>
-            >Experimental ideas such as ML-driven intrusion detection and blockchain security models.</li>
-          </ul>
-        </div>
-        <div class="band-footer">
-          <a href="/research-crypto/">Start with Research &amp; Crypto posts →</a>
-        </div>
-      </div>
-    </section>
+          <div class="band-footer">
+            <a href="/blue-team-soc/">Start with Blue-Team/SOC posts →</a>
+          </div>
+        </section>
 
-    <!-- Meta / How to use -->
-    <section class="meta-section">
-      <div class="container">
+        <!-- 02: Offensive -->
+        <section id="offensive-security" class="timeline-item">
+          <div class="timeline-marker">
+            <span>#</span>02
+          </div>
+          <div class="band-header">
+            <h2 class="band-title">Offensive Security &amp; VAPT</h2>
+            <div class="band-subtitle">
+              Red teaming, exploitation, and active defense.
+            </div>
+          </div>
+          <div class="band-body">
+            <p>
+              This track focuses on adversarial techniques: how attackers perform reconnaissance, exploit weaknesses, move laterally, and how those actions appear from the defender’s perspective.
+            </p>
+            <ul>
+              <li>End-to-end VAPT write-ups, from scoping and recon to post-exploitation.</li>
+              <li>Custom exploit scripts and proof-of-concept payloads, shared responsibly.</li>
+              <li>Honeypots, deception infrastructure, and active defense experiments.</li>
+              <li>Active Directory attack paths, misconfigurations, and lateral movement scenarios.</li>
+            </ul>
+          </div>
+          <div class="band-footer">
+            <a href="/offensive-security/">Start with Offensive Security posts →</a>
+          </div>
+        </section>
+
+        <!-- 03: DFIR -->
+        <section id="digital-forensics" class="timeline-item">
+          <div class="timeline-marker">
+            <span>#</span>03
+          </div>
+          <div class="band-header">
+            <h2 class="band-title">Digital Forensics &amp; Incident Response</h2>
+            <div class="band-subtitle">
+              Memory, disk, network, and blockchain forensics.
+            </div>
+          </div>
+          <div class="band-body">
+            <p>
+              Digital forensics within ResearchOrbit is about reconstruction: taking artifacts from compromised environments and turning them into a coherent, defensible incident timeline.
+            </p>
+            <ul>
+              <li>Host artifact analysis: registry hives, browser traces, event logs, and OS artifacts.</li>
+              <li>Memory and disk forensics workflows using common toolchains.</li>
+              <li>Network forensics from raw <code>.pcap</code> captures to narrative timelines.</li>
+              <li>Blockchain ledger tracking and transaction analysis for fraud and abuse investigations.</li>
+            </ul>
+          </div>
+          <div class="band-footer">
+            <a href="/digital-forensics/">Start with Digital Forensics posts →</a>
+          </div>
+        </section>
+
+        <!-- 04: Research & Crypto -->
+        <section id="research-crypto" class="timeline-item">
+          <div class="timeline-marker">
+            <span>#</span>04
+          </div>
+          <div class="band-header">
+            <h2 class="band-title">Research, Cryptography &amp; Emerging Security</h2>
+            <div class="band-subtitle">
+              Crypto flaws, reverse engineering, and experimental work.
+            </div>
+          </div>
+          <div class="band-body">
+            <p>
+              ResearchOrbit also serves as a notebook for lower-level and emerging topics, where ideas are explored before they harden into production-ready techniques.
+            </p>
+            <ul>
+              <li>Explanations of cryptographic flaws, misuse patterns, and implementation pitfalls.</li>
+              <li>Reverse engineering binaries, protocols, and obfuscated logic.</li>
+              <li>Explorations of post-quantum cryptography and hardware-assisted security.</li>
+              <li>Experimental work in ML-driven detection and blockchain security models.</li>
+            </ul>
+          </div>
+          <div class="band-footer">
+            <a href="/research-crypto/">Start with Research &amp; Crypto posts →</a>
+          </div>
+        </section>
+      </div>
+
+      <section class="meta-section">
         <h2>How to read ResearchOrbit</h2>
         <p>
-          Each post aims to be reproducible: where possible, it includes lab environment details, tools, and step-by-step procedures. 
-          Offensive techniques are presented for educational and defensive purposes; always run them in isolated, authorized environments.
+          Each article aims to be reproducible: where possible, it includes lab environment details, tooling, and step-by-step procedures. 
+          Offensive techniques are presented for educational and defensive purposes; only run them in isolated, authorized environments.
         </p>
         <p>
-          To inspect the code, configurations, and automation that power this site, refer to the backing repository at 
-          de>github.com/yourname/your-repo-name</code>.
+          For the source and automation that power this journal, refer to the repository at 
+          <code>github.com/yourname/your-repo-name</code>.
         </p>
-      </div>
-    </section>
+      </section>
+    </div>
   </main>
 
   <footer>
@@ -365,7 +409,6 @@
   </footer>
 
   <script>
-    // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
