@@ -2,319 +2,308 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>The Security Sandbox – Journal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Security Sandbox – Technical Cyber Security Journal</title>
   <style>
     :root {
-      --bg: #0b0c10;
-      --bg-alt: #11131a;
-      --fg: #e5e5e5;
-      --muted: #9ca3af;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.1);
-      --border: #1f2933;
+      --bg: #020617;
+      --sidebar-bg: #020817;
+      --panel-bg: #020f26;
+      --fg: #e5e7eb;
+      --muted: #64748b;
+      --accent: #22c55e;
+      --border: #1f2937;
       --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --font-mono: "Fira Code", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 0;
       font-family: var(--font-main);
       background-color: var(--bg);
       color: var(--fg);
-      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
     }
 
-    a {
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, #020817, #020617);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .brand {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    .brand span {
       color: var(--accent);
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      font-size: 0.8rem;
+    }
+
+    .nav-section h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin: 0 0 0.4rem;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--fg);
       text-decoration: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.35rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
-    a:hover {
-      text-decoration: underline;
-    }
-
-    header {
-      border-bottom: 1px solid var(--border);
-      background: radial-gradient(circle at top left, #1f2937 0, #020617 50%);
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    .site-header {
-      padding: 1.5rem 0 1rem;
-    }
-
-    .site-title {
-      font-size: 2.2rem;
-      margin: 0;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-    }
-
-    .site-subtitle {
-      margin: 0.4rem 0 0.6rem;
-      font-size: 1rem;
+    .nav-links a span {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
       color: var(--muted);
     }
 
-    nav {
-      margin-top: 0.75rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      font-size: 0.95rem;
+    .nav-links a:hover {
+      background-color: #020f26;
+      color: var(--accent);
     }
 
-    nav a {
-      padding: 0.2rem 0.6rem;
-      border-radius: 999px;
-      background-color: var(--bg-alt);
-      border: 1px solid var(--border);
-    }
-
-    nav a:hover {
-      background-color: var(--accent-soft);
-      border-color: var(--accent);
-    }
-
-    main {
-      padding: 2rem 0 3rem;
-    }
-
-    .intro {
-      margin-bottom: 2rem;
-    }
-
-    .intro p {
-      margin: 0.4rem 0;
-    }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      padding: 0.15rem 0.6rem;
+    .sidebar-footer {
+      margin-top: auto;
       font-size: 0.8rem;
       color: var(--muted);
-      margin-top: 0.4rem;
     }
 
-    .pill span {
+    .sidebar-footer code {
+      font-family: var(--font-mono);
+      background-color: #020f26;
+      padding: 0.1rem 0.25rem;
+      border-radius: 0.2rem;
+    }
+
+    .main {
+      flex: 1;
+      padding: 1.5rem 1.75rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      margin: 0 0 0.4rem;
+      font-size: 2.1rem;
+    }
+
+    .hero p {
+      margin: 0.25rem 0;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      margin-top: 0.5rem;
+      color: var(--muted);
+      font-family: var(--font-mono);
+    }
+
+    .badge span {
+      color: var(--accent);
       font-size: 0.7rem;
-      opacity: 0.8;
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
+      gap: 1rem;
       margin-top: 1rem;
     }
 
-    .card {
+    .panel {
+      background-color: var(--panel-bg);
       border-radius: 0.75rem;
       border: 1px solid var(--border);
-      background-color: var(--bg-alt);
-      padding: 1.25rem 1.25rem 1.4rem;
+      padding: 1rem 1rem 1.2rem;
     }
 
-    .card h2 {
-      margin: 0 0 0.4rem;
-      font-size: 1.15rem;
+    .panel h2 {
+      font-size: 1.1rem;
+      margin: 0 0 0.3rem;
     }
 
-    .card small {
+    .panel small {
       display: block;
       font-size: 0.8rem;
       color: var(--muted);
       margin-bottom: 0.5rem;
     }
 
-    .card ul {
-      margin: 0.5rem 0 0.8rem;
+    .panel ul {
+      margin: 0.5rem 0;
       padding-left: 1.1rem;
       font-size: 0.9rem;
     }
 
-    .card li {
+    .panel li {
       margin: 0.15rem 0;
     }
 
-    .card-footer {
-      margin-top: 0.6rem;
+    .panel a {
       font-size: 0.85rem;
     }
 
-    .card-footer a {
-      font-weight: 500;
-    }
-
-    .divider {
-      border-top: 1px solid var(--border);
-      margin: 2rem 0;
-    }
-
-    .meta-section {
+    .meta {
+      margin-top: 1.75rem;
       font-size: 0.9rem;
       color: var(--muted);
     }
 
-    .meta-section h3 {
-      color: var(--fg);
-      font-size: 1rem;
+    .meta h3 {
+      font-size: 0.95rem;
       margin-bottom: 0.3rem;
+      color: var(--fg);
     }
 
-    code {
-      font-family: var(--font-mono);
-      font-size: 0.9em;
-      background-color: #020617;
-      border-radius: 0.25rem;
-      padding: 0.1rem 0.25rem;
-    }
-
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1rem 0 1.5rem;
-      font-size: 0.85rem;
-      color: var(--muted);
-      text-align: center;
-    }
-
-    @media (max-width: 640px) {
-      .site-title {
-        font-size: 1.7rem;
+    @media (max-width: 800px) {
+      body {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+      }
+      .main {
+        padding: 1.25rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container site-header">
-      <h1 class="site-title">The Security Sandbox</h1>
-      <p class="site-subtitle">A technical cyber security journal for blue teams, red teams, and digital forensics practitioners.</p>
-      <nav>
-        <a href="#blue-team-soc">Blue-Team &amp; SOC</a>
-        <a href="#offensive-security">Offensive Security</a>
-        <a href="#digital-forensics">Digital Forensics</a>
-        <a href="#research-crypto">Research &amp; Crypto</a>
-      </nav>
+  <aside class="sidebar">
+    <div class="brand">
+      <span>&gt;_</span> The Security Sandbox
+      <small>Technical Cyber Security Journal</small>
     </div>
-  </header>
 
-  <main>
-    <div class="container">
-      <section class="intro">
-        <p>This site is the front-end of my technical journal, backed by a Git repository that stores write-ups, lab notes, and security research.</p>
-        <p>Every article is designed to be <strong>deep, reproducible, and tool-focused</strong>—written for practitioners who live in SIEMs, debuggers, packet captures, and exploit consoles.</p>
-        <div class="pill">
-          <span>●</span>
-          <span>Hosted at</span>
-          <code>yourname.github.io/your-repo-name</code>
-        </div>
-      </section>
-
-      <section aria-label="Domains">
-        <div class="grid">
-          <!-- Blue-Team / SOC -->
-          <article id="blue-team-soc" class="card">
-            <h2>Blue-Team &amp; SOC Engineering</h2>
-            <small>Detection engineering, incident response, and threat hunting.</small>
-            <ul>
-              <li>Designing and tuning SIEM pipelines (Wazuh, Splunk) for high-fidelity detection.</li>
-              <li>Building detection content: rules, correlation searches, dashboards, and playbooks.</li>
-              <li>Threat hunting workflows from hypothesis to verification.</li>
-              <li>Incident response case studies derived from lab-built intrusions.</li>
-            </ul>
-            <div class="card-footer">
-              <a href="/blue-team-soc/">Browse Blue-Team/SOC posts →</a>
-            </div>
-          </article>
-
-          <!-- Offensive Security -->
-          <article id="offensive-security" class="card">
-            <h2>Offensive Security &amp; VAPT</h2>
-            <small>Red teaming, exploit development, and active defense.</small>
-            <ul>
-              <li>End-to-end VAPT write-ups with methodology and tooling breakdowns.</li>
-              <li>Custom exploit scripts and proofs-of-concept (shared responsibly).</li>
-              <li>Active defense mechanisms like honeypots and deception environments.</li>
-              <li>Active Directory attack paths, misconfigurations, and lateral movement.</li>
-            </ul>
-            <div class="card-footer">
-              <a href="/offensive-security/">Browse Offensive Security posts →</a>
-            </div>
-          </article>
-
-          <!-- Digital Forensics -->
-          <article id="digital-forensics" class="card">
-            <h2>Digital Forensics &amp; IR</h2>
-            <small>Memory, disk, network, and blockchain forensics.</small>
-            <ul>
-              <li>Host artifact analysis: registry, browser artifacts, event logs, and more.</li>
-              <li>Memory and disk forensics walkthroughs with tool-specific workflows.</li>
-              <li>Network forensics using raw <code>.pcap</code> captures to build attack timelines.</li>
-              <li>Blockchain ledger tracking and transaction analysis for fraud detection.</li>
-            </ul>
-            <div class="card-footer">
-              <a href="/digital-forensics/">Browse Digital Forensics posts →</a>
-            </div>
-          </article>
-
-          <!-- Research / Crypto -->
-          <article id="research-crypto" class="card">
-            <h2>Research, Cryptography &amp; Emerging Security</h2>
-            <small>Crypto flaws, reverse engineering, and new paradigms.</small>
-            <ul>
-              <li>Analysis of cryptographic flaws, implementation pitfalls, and misuse patterns.</li>
-              <li>Reverse engineering binaries, protocols, and obfuscated logic.</li>
-              <li>Explorations in post-quantum cryptography and hardware security concepts.</li>
-              <li>Experimental work: ML-based detection, blockchain security, and beyond.</li>
-            </ul>
-            <div class="card-footer">
-              <a href="/research-crypto/">Browse Research &amp; Crypto posts →</a>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <div class="divider"></div>
-
-      <section class="meta-section" aria-label="Journal meta">
-        <h3>How to read this journal</h3>
-        <p>
-          Each post includes lab environment details, tooling, and step-by-step reproduction instructions where possible. 
-          Offensive techniques are always presented from an educational and defensive perspective—run them only in isolated, authorized environments.
-        </p>
-        <p>
-          If you are interested in the source that powers this site, including configs, automation, and lab artifacts, 
-          refer to the accompanying repository at <code>github.com/yourname/your-repo-name</code>.
-        </p>
-      </section>
+    <div class="nav-section">
+      <h3>Sections</h3>
+      <div class="nav-links">
+        <a href="#blue-team-soc">Blue-Team &amp; SOC <span>[def]</span></a>
+        <a href="#offensive-security">Offensive Security <span>[off]</span></a>
+        <a href="#digital-forensics">Digital Forensics <span>[dfir]</span></a>
+        <a href="#research-crypto">Research &amp; Crypto <span>[r&amp;c]</span></a>
+      </div>
     </div>
+
+    <div class="sidebar-footer">
+      Hosted at<br>
+      de>yourname.github.io/your-repo-name</code>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="hero">
+      <h1>Welcome to The Security Sandbox</h1>
+      <p>This journal documents hands-on security experiments, SOC investigations, offensive security labs, and research notes. Each entry is designed to be reproducible and deeply technical.</p>
+      <p>Use the sections on the left to explore content across blue teaming, offensive security, digital forensics, and applied cryptography.</p>
+      <div class="badge">
+        <span>●</span> journal::v1.0 &nbsp; | &nbsp; mode=read-only
+      </div>
+    </section>
+
+    <section class="grid">
+      <article id="blue-team-soc" class="panel">
+        <h2>Blue-Team &amp; SOC Engineering</h2>
+        <small>Detection engineering, IR workflows, and threat hunting.</small>
+        <u
+        <ul>
+          >SIEM architectures with Wazuh, Splunk, and custom log pipelines.</l/li>
+          >Detection rules, correlation searches, and visualization content.</l/li>
+          >Threat hunting playbooks with real/simulated telemetry.</l/li>
+          >Incident response case studies from lab-built intrusions.</li>
+        </ul>
+        <a href="/blue-team-soc/">Browse Blue-Team/SOC posts →</a>
+      </article>
+
+      <article id="offensive-security" class="panel">
+        <h2>Offensive Security &amp; VAPT</h2>
+        <small>Red teaming, exploitation, and active defense.</small>
+        <u
+        <ul>
+          >VAPT write-ups with methodology and tooling breakdowns.</l/li>
+          >Custom exploit scripts and proof-of-concept code.</l/li>
+          >Honeypots, deception, and active defense experiments.</l/li>
+          >Active Directory attack paths and lateral movement scenarios.</li>
+        </ul>
+        <a href="/offensive-security/">Browse Offensive Security posts →</a>
+      </article>
+
+      <article id="digital-forensics" class="panel">
+        <h2>Digital Forensics &amp; IR</h2>
+        <small>Memory, disk, network, and blockchain forensics.</small>
+        <u
+        <ul>
+          >Host artifact analysis with real-world style datasets.</l/li>
+          >Memory and disk forensics with tools like Magnet, Volatility, etc.</l/li>
+          >Packet-based investigations from raw de>.pcap</code> to timeline.</l/li>
+          >Blockchain ledger tracking and fraud investigation labs.</li>
+        </ul>
+        <a href="/digital-forensics/">Browse Digital Forensics posts →</a>
+      </article>
+
+      <article id="research-crypto" class="panel">
+        <h2>Research, Cryptography &amp; Emerging Security</h2>
+        <small>Crypto flaws, RE, and experimental ideas.</small>
+        <u
+        <ul>
+          >Explanations of cryptographic flaws and implementation pitfalls.</l/li>
+          >Reverse engineering binaries, protocols, and obfuscated logic.</l/li>
+          >Explorations of post-quantum cryptography and hardware security.</l/li>
+          >Experimental work in ML-driven detection and blockchain security.</li>
+        </ul>
+        <a href="/research-crypto/">Browse Research &amp; Crypto posts →</a>
+      </article>
+    </section>
+
+    <section class="meta">
+      <h3>How to use this journal</h3>
+      <p>Each post includes lab environment details, tools, and step-by-step reproduction instructions when possible. Offensive techniques are presented for educational and defensive use only; run them in isolated, authorized environments.</p>
+      <p>If you want to see the code and configuration behind this site, visit the backing repository at de>github.com/yourname/your-repo-name</code>.</p>
+    </section>
   </main>
-
-  <footer>
-    <div class="container">
-      &copy; <span id="year"></span> The Security Sandbox · Technical Cyber Security Journal
-    </div>
-  </footer>
-
-  <script>
-    // Set current year in footer
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
 </body>
 </html>
