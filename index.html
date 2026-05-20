@@ -23,9 +23,84 @@
     body {
       margin: 0;
       font-family: var(--font-main);
-      background-color: var(--bg);
       color: var(--fg);
       line-height: 1.6;
+      background-color: #000;
+      overflow-x: hidden;
+      cursor: none; /* hide default cursor */
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Matrix canvas behind everything */
+    #matrix-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background: #000;
+    }
+
+    /* Slight radial vignette on top of matrix */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(56,189,248,0.25) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(34,197,94,0.2) 0, transparent 55%);
+      mix-blend-mode: screen;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Custom cursor: pulsing ring + dot */
+    .cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition:
+        width 0.12s ease,
+        height 0.12s ease,
+        border-color 0.12s ease,
+        background-color 0.12s ease;
+      z-index: 9999;
+      box-shadow: 0 0 10px rgba(56,189,248,0.4);
+    }
+
+    .cursor-dot {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: var(--accent2);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+    }
+
+    .cursor-ring--hover {
+      width: 34px;
+      height: 34px;
+      border-color: var(--accent2);
+      background-color: rgba(56,189,248,0.08);
+    }
+
+    .cursor-ring--click {
+      animation: cursor-pop 0.25s ease-out;
+    }
+
+    @keyframes cursor-pop {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.4; }
     }
 
     a {
@@ -38,6 +113,7 @@
     header {
       border-bottom: 1px solid var(--border);
       background: radial-gradient(circle at top left, #1e293b 0, #020617 55%);
+      backdrop-filter: blur(4px);
     }
 
     .container {
@@ -45,8 +121,6 @@
       margin: 0 auto;
       padding: 0 1.5rem;
     }
-
-    /* Hero */
 
     .hero {
       padding: 2.4rem 0 2.1rem;
@@ -109,8 +183,6 @@
       padding: 1.5rem 0 3rem;
     }
 
-    /* Timeline layout */
-
     .timeline-wrapper {
       position: relative;
       padding-left: 2.5rem;
@@ -130,6 +202,18 @@
       position: relative;
       padding: 1.4rem 0 1.4rem;
       border-bottom: 1px solid #020617;
+      background: rgba(2, 6, 23, 0.75);
+      border-radius: 0.5rem;
+      padding-left: 1rem;
+      margin-bottom: 0.75rem;
+      backdrop-filter: blur(6px);
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out, border-color 0.12s ease-out;
+    }
+
+    .timeline-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.9);
+      border-color: rgba(56, 189, 248, 0.5);
     }
 
     .timeline-item:last-of-type {
@@ -151,6 +235,7 @@
       font-family: var(--font-mono);
       font-size: 0.8rem;
       color: var(--accent2);
+      box-shadow: 0 0 12px rgba(56,189,248,0.5);
     }
 
     .timeline-marker span {
@@ -209,6 +294,11 @@
       margin-top: 2.1rem;
       font-size: 0.9rem;
       color: var(--muted);
+      background: rgba(2, 8, 23, 0.85);
+      border-radius: 0.6rem;
+      padding: 1.1rem 1rem 1.2rem;
+      border: 1px solid rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(6px);
     }
 
     .meta-section h2 {
@@ -236,6 +326,7 @@
       font-size: 0.85rem;
       color: var(--muted);
       text-align: center;
+      background: linear-gradient(180deg, transparent, rgba(15, 23, 42, 0.9));
     }
 
     @media (max-width: 640px) {
@@ -248,6 +339,9 @@
       .timeline-wrapper {
         padding-left: 2rem;
       }
+      .timeline-item {
+        padding-left: 0.8rem;
+      }
       .timeline-marker {
         left: -2.1rem;
       }
@@ -255,6 +349,14 @@
   </style>
 </head>
 <body>
+  <!-- Matrix background canvas -->
+  <canvas id="matrix-bg"></canvas>
+
+  <!-- Custom cursor -->
+  <div class="cursor-ring"></div>
+  <div class="cursor-dot"></div>
+
+  <!-- Your existing content, unchanged -->
   <header>
     <div class="container hero">
       <h1 class="hero-title">
@@ -409,7 +511,64 @@
   </footer>
 
   <script>
+    // Footer year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Matrix-style background
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const letters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&';
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = Array(columns).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#38bdf8';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+        ctx.fillText(text, x, y);
+
+        if (y > canvas.height && Math.random() > 0.95) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(drawMatrix, 45);
+
+    // Custom cursor
+    const ring = document.querySelector('.cursor-ring');
+    const dot = document.querySelector('.cursor-dot');
+
+    document.addEventListener('mousemove', (e) => {
+      const { clientX, clientY } = e;
+      ring.style.transform = `translate(${clientX}px, ${clientY}px) translate(-50%, -50%)`;
+      dot.style.transform = `translate(${clientX}px, ${clientY}px) translate(-50%, -50%)`;
+    });
+
+    document.addEventListener('mousedown', () => {
+      ring.classList.add('cursor-ring--click');
+      setTimeout(() => ring.classList.remove('cursor-ring--click'), 200);
+    });
+
+    const interactiveSelectors = 'a, button, .timeline-item';
+    document.querySelectorAll(interactiveSelectors).forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('cursor-ring--hover'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('cursor-ring--hover'));
+    });
   </script>
 </body>
 </html>
